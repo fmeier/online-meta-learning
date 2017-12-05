@@ -36,33 +36,41 @@ if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
 fi
 
 # We currently only require the pytorch backend.
-# ubash::user_confirm ">> Install tensorflow GPU?" "n"
-# if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
-#     ubash::pp "Please install cuda 8 nvidia!"
-#     ubash::pp "Please install cudnn 5.1 from nvidia!"
-#     ubash::pp "Notice, symbolic links for libcudnn.dylib and libcuda.dylib have to be added."
-#     ${VPY_PIP} install --ignore-installed --upgrade tf-nightly-gpu
-# fi
+ubash::user_confirm ">> Install tensorflow GPU?" "n"
+if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
+    ubash::pp "Please install cuda 8 nvidia!"
+    ubash::pp "Please install cudnn 5.1 from nvidia!"
+    ubash::pp "Notice, symbolic links for libcudnn.dylib and libcuda.dylib have to be added."
+    ${VPY_PIP} install tensorflow==1.4
+fi
 
 
-# ubash::user_confirm ">> Install tensorflow CPU?" "n"
-# if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
-#     ${VPY_PIP} install --ignore-installed --upgrade tf-nightly
-# fi
+ubash::user_confirm ">> Install tensorflow CPU?" "n"
+if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
+    ${VPY_PIP} install tensorflow==1.4
+fi
 
 ubash::user_confirm ">> Install pytorch CPU linux?" "n"
 if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
-    ${VPY_PIP} install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp27-cp27mu-manylinux1_x86_64.whl 
-    ${VPY_PIP} install torchvision
+    ${VPY_PIP} install http://download.pytorch.org/whl/cu80/torch-0.3.0.post4-cp27-cp27mu-linux_x86_64.whl 
+    ${VPY_PIP} install torchvision 
+fi
+
+ubash::user_confirm ">> Install pytorch CPU linux?" "n"
+if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
+    ${VPY_PIP} install http://download.pytorch.org/whl/cu80/torch-0.3.0.post4-cp27-cp27mu-linux_x86_64.whl 
+    ${VPY_PIP} install torchvision 
 fi
 
 ubash::user_confirm ">> Install pytorch Mac?" "n"
 if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
-    pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp27-none-macosx_10_7_x86_64.whl 
-    pip install torchvision 
+    ${VPY_PIP} install http://download.pytorch.org/whl/torch-0.3.0.post4-cp27-none-macosx_10_6_x86_64.whl 
+    ${VPY_PIP} install torchvision 
 fi
 
 
 cd ${PROJECT_DIR}
+${VPY_BIN} setup.py develop
+cd ${PROJECT_DIR}/third_party/tf_utils
 ${VPY_BIN} setup.py develop
 
