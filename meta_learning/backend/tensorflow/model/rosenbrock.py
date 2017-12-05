@@ -66,7 +66,6 @@ class Rosenbrock(_interface.Interface):
                 rosenbrock = (
                     tf.square(1.0 - x1) +
                     100.0 * tf.square(x2 - tf.square(x1)))
-                rosenbrock = tf.Print(rosenbrock, [rosenbrock], 'rosenbrock')
 
             saver = None
             if saver_fn is not None:

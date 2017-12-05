@@ -4,7 +4,6 @@ import abc
 import numpy as np
 import tensorflow as tf
 
-from tf_utils import debug as _debug
 from tf_utils import ops as _tf_utils_ops
 from tf_utils import summaries as _summaries
 
@@ -25,7 +24,7 @@ class Static(_interface.Interface):
                  memory_min_pred,
                  memory_max_pred,
                  memory_num_centers,
-                 memory_activation_threshold,
+                 memory_lm_scale,
                  memory_predict_exp_smooth,
                  learning_rate,
                  logdir,
@@ -36,6 +35,8 @@ class Static(_interface.Interface):
         self._min_pred = np.array(memory_min_pred, dtype=np.float32)
         self._max_pred = np.array(memory_max_pred, dtype=np.float32)
         self._num_centers = np.array(memory_num_centers, dtype=np.int32)
+        self._lm_scale = np.array(memory_lm_scale, dtype=np.float32)
+
         self._learning_rate = np.array(learning_rate, dtype=np.float32)
         self._predict_exp_smooth = np.array(
             memory_predict_exp_smooth, dtype=np.float32)
@@ -44,7 +45,6 @@ class Static(_interface.Interface):
         self._centers = np.linspace(self._min_value,
                                     self._max_value,
                                     self._num_centers).astype(np.float32)
-        self._activation_threshold = memory_activation_threshold
         self._name = ''
 
     @abc.abstractmethod
@@ -64,10 +64,8 @@ class Static(_interface.Interface):
                 1, dtype=np.float32)
 
         # Setting sigma according to distance half squared
-        self._threshold_activation_tf = tf.constant(
-            self._activation_threshold, dtype=self._dtype)
         self._sigma_tf = tf.constant(
-            ((self._centers[0] - self._centers[1]) * 2.0)**2,
+            ((self._centers[0] - self._centers[1]) * self._lm_scale)**2,
             dtype=self._dtype)
         self._center_tf = tf.constant(self._centers, dtype=self._dtype)
         self._ones = tf.ones_like(self._center_tf, dtype=self._dtype)

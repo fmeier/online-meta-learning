@@ -32,6 +32,21 @@ class Standard(_interface.Interface):
         self._summary_save_steps = summary_save_steps
         self._logging_steps = logging_steps
 
+    @classmethod
+    def init_fn(cls,
+                init_checkpoint_dir=None,
+                checkpoint_save_steps=20,
+                checkpoint_max_to_keep=4,
+                summary_save_steps=1,
+                logging_steps=1):
+        def fn():
+            return cls(init_checkpoint_dir,
+                       checkpoint_save_steps,
+                       checkpoint_max_to_keep,
+                       summary_save_steps,
+                       logging_steps)
+        return fn
+
     def create_training_hooks(self,
                               model_dir,
                               logging_dict):

@@ -96,6 +96,19 @@ class Memory(_interface.Interface):
             use_exclude_var_names=params.get('use_exclude_var_names', False),
             params=params)
 
+    @classmethod
+    def init_fn(cls,
+                memory_init_fn,
+                gradient_init_fn,
+                use_exclude_var_names=False,
+                params=None):
+        def fn():
+            return cls(memory_init_fn=memory_init_fn,
+                       gradient_init_fn=gradient_init_fn,
+                       use_exclude_var_names=use_exclude_var_names,
+                       params=params)
+        return fn
+
     def __init__(self,
                  use_exclude_var_names=False,
                  params=None,

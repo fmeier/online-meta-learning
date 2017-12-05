@@ -40,6 +40,27 @@ class Adam(_standard.Standard):
         self._beta_2 = np.array(beta_2, dtype=np.float32)
         self._epsilon = np.array(epsilon, dtype=np.float32)
 
+    @classmethod
+    def init_fn(cls,
+                learning_rate,
+                beta_1=0.9,
+                beta_2=0.999,
+                epsilon=1e-8,
+                use_exponential_decay=False,
+                decay_steps=None,
+                decay_rate=None,
+                use_exclude_var_names=False):
+        def fn():
+            return cls(learning_rate,
+                       beta_1,
+                       beta_2,
+                       epsilon,
+                       use_exponential_decay,
+                       decay_steps,
+                       decay_rate,
+                       use_exclude_var_names)
+        return fn
+
     def get_optimizer_op(self, global_step):
         return tf.train.AdamOptimizer(
             learning_rate=self._get_learning_rate(),

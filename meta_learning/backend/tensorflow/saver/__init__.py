@@ -3,3 +3,5 @@ from tf_utils.saver import interface
 from tf_utils.saver import standard
 
 create_from_params = interface.Interface.create_from_params
+
+from tf_utils.saver.standard import Standard

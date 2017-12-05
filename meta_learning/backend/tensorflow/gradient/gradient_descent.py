@@ -25,6 +25,19 @@ class GradientDescent(_interface.Interface):
         self._is_debug = is_debug
         self._logdir = logdir
 
+    @classmethod
+    def init_fn(cls,
+                learning_rate,
+                clip_by_value,
+                is_debug=False,
+                logdir=None):
+        def fn():
+            return cls(learning_rate,
+                       clip_by_value,
+                       is_debug=False,
+                       logdir=None)
+        return fn
+
     def create_variables(self, variable, optimizer):
         variable_shape = tf.reshape(variable, [-1]).get_shape().as_list()
         # variable_shape = variable.get_shape().as_list()
