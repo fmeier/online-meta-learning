@@ -9,19 +9,18 @@ Please execute the following commands to setup a virtual environment with the co
 ```bash
 # This script will install all dependencies, initially please answer y for upgrade dependencies.
 # Answer y to install pytorch for your current platform.
+# Answer y to install tensorflow for your current platform.
 bash scripts/install_dependencies.sh
 ```
 
 ## Examples
-Currently, we have example notebook for the pytorch backend available, more notebooks also with a tensorbackend will be added soon.
+Currently, we have example notebook for the pytorch and tensorflow backend available, more notebooks with mnist examples will be available soon.
 
 ```bash
-# As a first step source the virtual environment.
-source vpy/bin/activate
-# Now you can start the jupyter notebook backend
-jupyter notebook
+bash scripts/start_jupyter.sh
 
 # By default a browser window should open with the url localhost:8888.
-# Please click on notebooks/example_rosenbrock_pytorch.ipynb
+# For pytorch please click on notebooks/example_rosenbrock_pytorch.ipynb
+# For tensorflow please click on notebooks/example_rosenbrock_tf.ipynb
 # Now you can run through the example notebook.
 ``` 
