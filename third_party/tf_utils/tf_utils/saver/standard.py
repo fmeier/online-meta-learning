@@ -20,6 +20,21 @@ class Standard(_interface.Interface):
                    params.summary_save_steps,
                    params.logging_steps)
 
+    @classmethod
+    def init_fn(cls,
+                init_checkpoint_dir=None,
+                checkpoint_save_steps=20,
+                checkpoint_max_to_keep=4,
+                summary_save_steps=1,
+                logging_steps=1):
+        def fn():
+            return cls(init_checkpoint_dir=init_checkpoint_dir,
+                       checkpoint_save_steps=checkpoint_save_steps,
+                       checkpoint_max_to_keep=checkpoint_max_to_keep,
+                       summary_save_steps=summary_save_steps,
+                       logging_steps=logging_steps)
+        return fn
+
     def __init__(self,
                  init_checkpoint_dir,
                  checkpoint_save_steps,
@@ -31,21 +46,6 @@ class Standard(_interface.Interface):
         self._checkpoint_max_to_keep = checkpoint_max_to_keep
         self._summary_save_steps = summary_save_steps
         self._logging_steps = logging_steps
-
-    @classmethod
-    def init_fn(cls,
-                init_checkpoint_dir=None,
-                checkpoint_save_steps=20,
-                checkpoint_max_to_keep=4,
-                summary_save_steps=1,
-                logging_steps=1):
-        def fn():
-            return cls(init_checkpoint_dir,
-                       checkpoint_save_steps,
-                       checkpoint_max_to_keep,
-                       summary_save_steps,
-                       logging_steps)
-        return fn
 
     def create_training_hooks(self,
                               model_dir,
