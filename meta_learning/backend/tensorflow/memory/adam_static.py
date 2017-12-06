@@ -42,20 +42,20 @@ class AdamStatic(_static.Static):
                 logdir=None,
                 is_debug=False):
         def fn():
-            return cls(memory_clip_grad,
-                       -memory_clip_grad,
-                       memory_min_pred,
-                       memory_max_pred,
-                       memory_num_centers,
-                       memory_lm_scale,
-                       memory_predict_exp_smooth,
-                       memory_learning_rate,
-                       memory_beta_1,
-                       memory_beta_2,
-                       memory_epsilon,
-                       learning_rate,
-                       logdir,
-                       is_debug)
+            return cls(memory_max_value=memory_clip_grad,
+                       memory_min_value=-memory_clip_grad,
+                       memory_min_pred=memory_min_pred,
+                       memory_max_pred=memory_max_pred,
+                       memory_num_centers=memory_num_centers,
+                       memory_lm_scale=memory_lm_scale,
+                       memory_predict_exp_smooth=memory_predict_exp_smooth,
+                       memory_learning_rate=memory_learning_rate,
+                       memory_beta_1=memory_beta_1,
+                       memory_beta_2=memory_beta_2,
+                       memory_epsilon=memory_epsilon,
+                       learning_rate=learning_rate,
+                       logdir=logdir,
+                       is_debug=is_debug)
         return fn
 
     def __init__(self,

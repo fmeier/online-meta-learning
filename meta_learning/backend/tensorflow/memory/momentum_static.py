@@ -24,6 +24,34 @@ class MomentumStatic(_static.Static):
                    params.get('logdir', '/tmp/'),
                    params.get('is_debug', False))
 
+    @classmethod
+    def init_fn(cls,
+                learning_rate,
+                memory_clip_grad,
+                memory_lm_scale,
+                memory_num_centers,
+                memory_learning_rate,
+                memory_momentum=0.9,
+                memory_predict_exp_smooth=0.0,
+                memory_min_pred=1e-9,
+                memory_max_pred=1.0,
+                logdir=None,
+                is_debug=False):
+        def fn():
+            return cls(memory_max_value=memory_clip_grad,
+                       memory_min_value=-memory_clip_grad,
+                       memory_min_pred=memory_min_pred,
+                       memory_max_pred=memory_max_pred,
+                       memory_num_centers=memory_num_centers,
+                       memory_lm_scale=memory_lm_scale,
+                       memory_predict_exp_smooth=memory_predict_exp_smooth,
+                       memory_learning_rate=memory_learning_rate,
+                       memory_momentum=memory_momentum,
+                       learning_rate=learning_rate,
+                       logdir=logdir,
+                       is_debug=is_debug)
+        return fn
+
     def __init__(self,
                  memory_max_value,
                  memory_min_value,

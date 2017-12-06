@@ -15,6 +15,19 @@ class GradientDescent(_interface.Interface):
                    params.get('is_debug', False),
                    params.get('logdir', '/tmp'))
 
+    @classmethod
+    def init_fn(cls,
+                learning_rate,
+                clip_by_value,
+                is_debug=False,
+                logdir=None):
+        def fn():
+            return cls(learning_rate=learning_rate,
+                       clip_by_value=clip_by_value,
+                       is_debug=is_debug,
+                       logdir=logdir)
+        return fn
+
     def __init__(self,
                  learning_rate,
                  clip_by_value,
@@ -24,19 +37,6 @@ class GradientDescent(_interface.Interface):
         self._learning_rate = np.array(learning_rate, dtype=np.float32)
         self._is_debug = is_debug
         self._logdir = logdir
-
-    @classmethod
-    def init_fn(cls,
-                learning_rate,
-                clip_by_value,
-                is_debug=False,
-                logdir=None):
-        def fn():
-            return cls(learning_rate,
-                       clip_by_value,
-                       is_debug=False,
-                       logdir=None)
-        return fn
 
     def create_variables(self, variable, optimizer):
         variable_shape = tf.reshape(variable, [-1]).get_shape().as_list()

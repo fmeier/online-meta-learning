@@ -18,6 +18,25 @@ class Adam(_interface.Interface):
                    params.get('is_debug', False),
                    params.get('logdir', '/tmp'))
 
+    @classmethod
+    def init_fn(cls,
+                learning_rate,
+                clip_by_value,
+                beta_1=0.9,
+                beta_2=0.999,
+                epsilon=1e-8,
+                is_debug=False,
+                logdir=None):
+        def fn():
+            return cls(learning_rate=learning_rate,
+                       clip_by_value=clip_by_value,
+                       beta_1=beta_1,
+                       beta_2=beta_2,
+                       epsilon=epsilon,
+                       is_debug=is_debug,
+                       logdir=logdir)
+        return fn
+
     def __init__(self,
                  learning_rate,
                  beta_1,
