@@ -11,7 +11,7 @@ from tf_utils.model import interface as _interface
 DEFAULT_FILTER_SIZE = [8, 128]
 
 
-class ModelLenetSmall(_interface.Interface):
+class LenetSmall(_interface.Interface):
 
     @classmethod
     def create_from_params(cls, params, **kwargs):
