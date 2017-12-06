@@ -3,7 +3,7 @@ import tensorflow as tf
 
 from tf_utils import ops
 
-from meta_learning.backend.tensorflow.gradient import interface as _interface
+from meta_learning.backend.tensorflow.base_optimizer import interface as _interface
 
 
 class Adam(_interface.Interface):
